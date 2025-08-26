@@ -1,0 +1,37 @@
+<templates id="template" xml:space="preserve">
+    <t t-name="SaleDashboardTemplate">
+         <div class="">
+            <div>
+                <center>
+                    <h1 style="margin:20px;">
+                        Sales Dashboard</h1>
+                </center>
+            </div>
+             <div style="border:solid;height:100px">
+                 <table class="table">
+                     <thead>
+                         <tr>
+                             <th>Customer</th>
+                             <th>Product</th>
+                             <th>Date</th>
+                             <th>Amount</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+<!--                          <t t-foreach="state.result" t-as="leave" t-key="leave.id">-->
+<!--                          <tr >-->
+
+<!--                                <td colspan="1" style="color:red;text-align:left;cursor: pointer;">-->
+<!--                                <strong>-->
+<!--                                    <t t-esc="leave.name"/>-->
+<!--                                </strong>-->
+<!--                            </td>-->
+<!--                            </tr>-->
+<!--                          </t>-->
+                     </tbody>
+                 </table>
+
+             </div>
+         </div>
+    </t>
+</templates>

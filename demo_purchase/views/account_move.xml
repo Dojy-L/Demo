@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <record id="view_picking_form_inherit_material_request" model="ir.ui.view">
+        <field name="name">view.picking.form.inherit.mr</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+<!--            <xpath expr="//header" position="inside">-->
+
+                <button name="kg_request_approve" type="object" string="Request for Approval"
+                        class="oe_highlight"/>
+                <button name="action_stock_approve"
+                        type="object"
+                        string="Approve"
+                        class="oe_highlight"/>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>
