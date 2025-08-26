@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="kg_material_request_view_form" model="ir.ui.view">
+        <field name="name">kg.material.request.view.form</field>
+        <field name="model">kg.material.request</field>
+        <field name="arch" type="xml">
+            <form string="Material Request">
+                <header>
+                    <button name="action_request_for_approval_button" type="object"
+                            groups="kg_material_request.material_request_group_user"
+                            string=" Request for Approval" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve_button" type="object"
+                            groups="kg_material_request.material_request_group_approval"
+                            string="Approve" class="oe_highlight" invisible=" state not in ('request')"/>
+                    <button name="action_reject_button" type="object"
+                            groups="kg_material_request.material_request_group_approval"
+                            string="Reject" class="oe_highlight" invisible="state not in ('request')"/>
+
+                    <button name="action_reset_to_draft_button" type="object"
+                            string="Reset" invisible=" state not in ('sale','internal','cancel')"/>
+                    <button name="action_create_sale_order_button" type="object"
+                            string="Create Sale Order" class="oe_highlight"
+                            invisible=" state != 'approve' or type !='sale'"/>
+                    <button name="action_internal_transfer_button" type="object"
+                            string="Internal Transfer" class="oe_highlight"
+                            invisible="state != 'approve' or type !='internal'  or transfer_count != 0"/>
+                    <button name="action_cancel_button" type="object"
+                            string="Cancel" invisible=" state not in ('approve','reject')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_transfer" type="object" icon="fa-archive" class="oe_stat_button"
+                                invisible="transfer_count == 0">
+                            <field name="transfer_count" widget="statinfo" string="Transfer"/>
+                        </button>
+                        <button name="action_view_quotations" type="object" icon="fa-archive" class="oe_stat_button"
+                                invisible="sale_count == 0">
+                            <field name="sale_count" widget="statinfo" string="Sale Order"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" readonly="state not in ('draft','request')"/>
+                            <field name="requested_by" invisible="1"/>
+                            <field name="requested_by_id" readonly="state not in ('draft','request')"/>
+                            <field name="type" readonly="state not in ('draft','request')"/>
+
+                        </group>
+                        <group>
+                            <field name="request_date" readonly="state not in ('draft','request')"/>
+                            <field name="company_id" readonly="state not in ('draft','request')"/>
+                            <field name="source_location_id" invisible="type !='internal'"
+                                   required="type =='internal'" readonly="state not in ('draft','request')"/>
+                            <field name="internal_transfer_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="sale_order_ids" widget="many2many_tags" invisible="1"/>
+                            <field name="stock_ids" widget="many2many_tags" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+
+                        <page string="Material Request Lines" name="material_line_ids">
+                            <field name="material_line_ids" readonly="state not in ('draft','request')">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="description"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"/>
+                                    <field name="unit_price"/>
+                                    <field name="subtotal"/>
+                                    <field name="customer_id"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <page string="Notes">
+                            <group>
+                                <field name="notes" readonly="state not in ('draft','request')"/>
+                            </group>
+                        </page>
+                        <page string="Other Info">
+                            <group>
+                                <field name="approved_by"/>
+                                <field name="approve_date"/>
+                                <field name="rejected_by"/>
+                                <field name="reject_date"/>
+                                <field name="reject_reason"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+    <record id="view_material_request_search" model="ir.ui.view">
+        <field name="name">material.request.search</field>
+        <field name="model">kg.material.request</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Name"/>
+                <field name="employee_id" string="Employee"/>
+                <field name="requested_by" string="Requested By"/>
+                <field name="type" string="Type"/>
+
+                <group expand="1" string="Group By">
+                    <filter string="Employee" name="employee" context="{'group_by': 'employee_id'}"/>
+                </group>
+                <group expand="1" string="Type">
+                    <filter string="Type" name="employee" context="{'group_by': 'type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="kg_material_request_view_tree" model="ir.ui.view">
+        <field name="name">kg.material.request.view.form.tree</field>
+        <field name="model">kg.material.request</field>
+        <field name="arch" type="xml">
+            <tree string="Estimation">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="request_date"/>
+                <field name="requested_by"/>
+                <field name="company_id"/>
+                <field name="type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="kg_material_request_action" model="ir.actions.act_window">
+        <field name="name">Material Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">kg.material.request</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_parent_material_request"
+              name="Material Request"
+              sequence="51"/>
+
+    <menuitem id="menu_material_request"
+              name="Material Request"
+              parent="kg_material_request.menu_parent_material_request"
+              action="kg_material_request_action"
+              sequence="52"/>
+
+</odoo>
+

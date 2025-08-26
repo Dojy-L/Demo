@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+        <record id="email_template_inactive_customer" model="mail.template">
+            <field name="name">Inactive Customer Reminder</field>
+            <field name="subject">Customer Re-Engagement {{object.name}}</field>
+            <field name="email_from">{{ object.company_id.email }}</field>
+            <field name="email_to">{{object.email}}</field>
+            <field name="model_id" ref="kg_customer_reengagement.model_res_partner"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+                <p>Dear Sir/Madam,</p>
+                <p>We noticed you haven't shopped with us in a while. We'd like to have you back!</p>
+                <p>Here's a 10% discount — use this code at checkout: <strong>${ctx.coupon_code}</strong></p>
+                <p><strong>Your Discount Code:</strong> ${coupon_code}</p>
+                     <p>
+                    <a href="${object.sale_order_ids[0].get_portal_url()}" style="padding:10px 15px;background:#007BFF;color:#fff;text-decoration:none;border-radius:5px;">
+                        Shop Now
+                    </a>
+                </p>
+                <p>Hope to see you soon!<br/>Your Company Team</p>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

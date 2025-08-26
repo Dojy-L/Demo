@@ -1,0 +1,57 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<odoo>
+
+    <template id="portal_document" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/kg_car_repair/static/description/icon3.png'"/>
+                <t t-set="title">Car Repair Request</t>
+                <t t-set="url" t-value="'/my/request'"/>
+                <t t-set="placeholder_count" t-value="'request_count'"/>
+                <img t-if="icon" t-att-src="icon" class="custom-icon"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_car_repair_list_view" name="Car Repair Request">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Car Repair</t>
+            </t>
+
+            <t t-call="portal.portal_table">
+                <thead>
+                    <tr>
+                        <td>Customer</td>
+                        <td>Repair Date</td>
+                        <td>Model</td>
+                        <td>Color</td>
+                        <td>Number</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="repair" t-as="rpr">
+                        <tr>
+                            <td>
+                                <t t-esc="rpr['name']"/>
+                            </td>
+                            <td>
+                                <t t-esc="rpr['booking_date'] and rpr['booking_date'].strftime('%d/%m/%Y') or ' '"/>
+                            </td>
+                            <td>
+                                <t t-esc="rpr['partner']"/>
+                            </td>
+                            <td>
+                                <t t-esc="rpr['type']"/>
+                            </td>
+                            <td>
+                                <t t-esc="rpr['number']"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+</odoo>

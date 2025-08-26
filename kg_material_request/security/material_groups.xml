@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Group used to identify users and display the HR application tree -->
+        <record id="material_request_group_user" model="res.groups">
+            <field name="name">Material Request User</field>
+            <field name="comment">Material Request User</field>
+        </record>
+
+        <record id="material_request_group_approval" model="res.groups">
+            <field name="name">Material Request Approval</field>
+            <field name="comment">Material Request Approval</field>
+        </record>
+    </data>
+</odoo>

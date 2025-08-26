@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id='car_repair_request_user_technician' model='res.groups'>
+            <field name='name'>Car Technician Users</field>
+        </record>
+
+        <record id="module_car_category" model="ir.module.category">
+            <field name="name">Car Repair Request</field>
+            <field name="sequence">17</field>
+        </record>
+
+        <record id='car_repair_request_group_user' model='res.groups'>
+            <field name='name'>User</field>
+            <field name="category_id" ref="kg_car_repair.module_car_category"/>
+        </record>
+
+        <record id="car_repair_request_group_technician" model="res.groups">
+            <field name="name">Car Technician</field>
+            <field name="category_id" ref="kg_car_repair.module_car_category"/>
+            <field name="implied_ids" eval="[(4, ref('kg_car_repair.car_repair_request_group_user'))]"/>
+        </record>
+
+<!--        <record id="car_repair_request_group_approval" model="res.groups">-->
+<!--            <field name="name"> Car Approvar</field>-->
+<!--            <field name="category_id" ref="kg_material_request.module_mr_category"/>-->
+<!--           <field name="implied_ids" eval="[(4, ref('kg_material_request.material_request_group_user')), (4, ref('kg_material_request.material_request_group_manager'))]"/>-->
+<!--        </record>-->
+
+        <record id="car_repair_request_group_admin" model="res.groups">
+            <field name="name">Administrator</field>
+            <field name="category_id" ref="kg_car_repair.module_car_category"/>
+           <field name="implied_ids" eval="[(4, ref('kg_car_repair.car_repair_request_group_user')), (4, ref('kg_car_repair.car_repair_request_group_technician'))]"/>
+        </record>
+    </data>
+</odoo>

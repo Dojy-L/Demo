@@ -1,0 +1,126 @@
+<odoo>
+    <template id="portal_car_repair_request_form" name="Car Repair Request Form">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h3 class="mb-4">Car Repair Request</h3>
+                <form action="/car_repair_form/submit" method="post" class="form-control shadow p-4"
+                      enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Customer</label>
+                            <input style="width:500px;" type="text" name="partner_id" t-att-value="partner_id"
+                                   class="form-control" required="1"/>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Product</label>
+                            <select style="width:500px;" name="product_id" class="form-control link-style">
+                                <t t-foreach="product_data" t-as="product">
+                                    <option t-att-value="product.id">
+                                        <t t-esc="product.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Repair Tag</label>
+                             <select style="width:500px;" name="repair_tag_id" class="form-control link-style">
+                                <t t-foreach="tag_data" t-as="tag">
+                                    <option t-att-value="tag.id">
+                                        <t t-esc="tag.name"/>
+                                    </option>
+                                </t>
+                            </select>
+<!--                            <input type="text" name="vehicle_no" class="form-control" required="1"/>-->
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Mileage(km)</label>
+                            <input type="number" name="mileage" class="form-control" placeholder="Enter mileage in km"
+                                   step="0.1" min="0"/>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Brand</label>
+                            <select style="width:500px;" name="brand_id" class="form-control link-style">
+<!--                                <t t-foreach="brands" t-as="brand">-->
+<!--                                    <option t-att-value="brand.id">-->
+<!--                                        <t t-esc="brand.name"/>-->
+<!--                                    </option>-->
+<!--                                </t>-->
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Car Model</label>
+                            <input type="text" name="car_model" class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Car Color</label>
+                            <input type="text" name="car_color" class="form-control"/>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Booking Date</label>
+                            <input type="datetime-local" name="booking_date" class="form-control"
+                                   t-att-value="(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M'))"/>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Repair Reason</label>
+                        <textarea name="repair_reason" class="form-control" rows="3" required="1"/>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Submit Request</button>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <template id="car_repair_request_thanks" name="Employee Timeoff Thanks">
+        <t t-call="website.layout">
+            <style>
+                body {
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                height: 100vh;0
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: Arial, sans-serif;
+                color: #fff;
+                }
+                .thanks-container {
+                background: rgba(0, 0, 0, 0.5); /* Dark overlay for better readability */
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                width: 100%;
+                max-width: 600px;
+                box-sizing: border-box;
+                text-align: center;
+                }
+                .thanks-container h2 {
+                background-color: #babec2;
+                padding: 15px;
+                border-radius: 5px;
+                color: #333;
+                }
+                .thanks-container p {
+                margin-top: 15px;
+                font-size: 18px;
+                }
+            </style>
+            <div class="container thanks-container">
+                <h2 align="center">Your car repair request is submitted successfully !!</h2>
+                <p align="center">We have received your request and will get back to you soon.</p>
+            </div>
+        </t>
+    </template>
+
+</odoo>

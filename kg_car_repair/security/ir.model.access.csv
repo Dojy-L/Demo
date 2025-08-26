@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_car_repair,car.repair,model_car_repair,,1,1,1,1
+access_service_type,service.type,model_service_type,,1,1,1,1
+access_car_brand,car.brand,model_car_brand,,1,1,1,1
+access_car_repair_estimation_line,car.repair.estimation.line,model_car_repair_estimation_line,,1,1,1,1
